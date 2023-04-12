@@ -23,5 +23,31 @@ public:
 };
 
 class Delivery_method{
+    double distance;
+    float cost;
+public:
+    Delivery_method(float input_distance);
+    void set_distance(float new_distance);
+    float get_distance() const;
+    void set_cost(float new_cost);
+    float get_cost() const;
+    float calculate_cost(float base_price, float multiplier) const;
+};
 
+class Parcel_locker : public Delivery_method
+{
+public:
+    Parcel_locker(float input_distance);
+};
+
+class Delivery_man : public Delivery_method
+{
+public:
+    Delivery_man(float input_distance);
+};
+
+class Mailbox : public Delivery_method
+{
+public:
+    Mailbox(float input_distance);
 };
