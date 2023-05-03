@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+#include <map>
 
 class Shipment{
     float cost;
@@ -61,13 +61,15 @@ public:
 };
 
 class Headquarters{
-    std::vector<Shipment> shipments;
+    std::map<std::string, Shipment> shipments;
     float balance;
 public:
     Headquarters(float input_balance);
-    void add_Shipment(Shipment s);
-    std::vector<Shipment> get_Shipments() const;
-    void print_Shipments() const;
+    void add_shipment(Shipment shipment);
+    void remove_shipment(Shipment shipment);
+    std::map<std::string, Shipment> get_shipments() const;
+    void print_shipments() const;
+    void send_shipment(Shipment shipment, Delivery_method del_met);
     void set_balance(float new_balance);
     void add_to_balance(float price);
     float get_balance() const ;

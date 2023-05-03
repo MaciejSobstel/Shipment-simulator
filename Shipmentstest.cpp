@@ -35,9 +35,11 @@ int main(){
     cout << "Mailbox cost: " << mail1_cost << endl;
 
     Headquarters h1(1000.35);
-    h1.add_Shipment(letter1);
-    h1.add_Shipment(pack1);
-    h1.print_Shipments();
+    h1.add_shipment(letter1);
+    h1.add_shipment(pack1);
+    h1.print_shipments();
+    h1.send_shipment(letter1, m1);
+    h1.print_shipments();
     float h1_balance = h1.get_balance();
     cout << h1_balance << "$" << endl;
     return 0;

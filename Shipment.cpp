@@ -106,21 +106,31 @@ Headquarters::Headquarters(float input_balance){
     set_balance(input_balance);
 }
 
-void Headquarters::add_Shipment(Shipment shipment){
-    shipments.push_back(shipment);
+void Headquarters::add_shipment(Shipment shipment){
+    string shipment_name = shipment.get_name();
+    shipments.insert({shipment_name, shipment});
 }
 
-vector<Shipment> Headquarters::get_Shipments() const {
+void Headquarters::remove_shipment(Shipment shipment){
+    string shipment_name = shipment.get_name();
+    shipments.erase(shipment_name);
+}
+
+map<string, Shipment> Headquarters::get_shipments() const {
     return shipments;
 }
 
-void Headquarters::print_Shipments() const {
-    vector<Shipment> v = get_Shipments();
+void Headquarters::print_shipments() const {
+    map<string, Shipment> ship_map = get_shipments();
     cout << "Here's what we have in storage:\n";
-    for (auto x : v) {
-        std::cout << x.get_name() << " ";
+    for (auto it = ship_map.begin(); it != ship_map.end(); ++it) {
+        cout << it->first << endl;
     }
-    std::cout << std::endl;
+    cout << endl;
+}
+
+void Headquarters::send_shipment(Shipment shipment, Delivery_method del_met){
+    remove_shipment(shipment);
 }
 
 void Headquarters::set_balance(float new_balance){
