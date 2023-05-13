@@ -3,11 +3,14 @@
 
 class Shipment{
     float cost;
+    float expenses;
     std::string name;
 public:
     Shipment(std::string input_name);
     void set_name(std::string new_name);
     std::string get_name() const;
+    void set_expenses(float new_expenses);
+    float get_expenses() const;
     void set_cost(float new_cost);
     float get_cost() const;
 };
@@ -28,49 +31,33 @@ public:
 };
 
 class Delivery_method{
-    double distance;
-    float cost;
+    float base_price;
+    float expenses;
     std::string name;
 public:
-    Delivery_method(std::string input_name, float input_distance);
+    Delivery_method(std::string input_name);
     void set_name(std::string new_name);
     std::string get_name() const;
-    void set_distance(float new_distance);
-    float get_distance() const;
-    void set_cost(float new_cost);
-    float get_cost() const;
-    float calculate_cost(float base_price, float multiplier) const;
+    void set_base_price(float new_price);
+    float get_base_price() const;
+    void set_expenses(float new_expenses);
+    float get_exepenses() const;
 };
 
 class Parcel_locker : public Delivery_method
 {
 public:
-    Parcel_locker(std::string input_name, float input_distance);
+    Parcel_locker(std::string input_name);
 };
 
 class Delivery_man : public Delivery_method
 {
 public:
-    Delivery_man(std::string input_name, float input_distance);
+    Delivery_man(std::string input_name);
 };
 
 class Mailbox : public Delivery_method
 {
 public:
-    Mailbox(std::string input_name, float input_distance);
-};
-
-class Headquarters{
-    std::map<std::string, Shipment> shipments;
-    float balance;
-public:
-    Headquarters(float input_balance);
-    void add_shipment(Shipment shipment);
-    void remove_shipment(Shipment shipment);
-    std::map<std::string, Shipment> get_shipments() const;
-    void print_shipments() const;
-    void send_shipment(Shipment shipment, Delivery_method del_met);
-    void set_balance(float new_balance);
-    void add_to_balance(float price);
-    float get_balance() const ;
+    Mailbox(std::string input_name);
 };
