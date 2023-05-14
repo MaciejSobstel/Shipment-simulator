@@ -4,10 +4,6 @@
 
 using namespace std;
 
-Shipment::Shipment(string input_name){
-    set_name(input_name);
-}
-
 void Shipment::set_name(string new_name){
     name = new_name;
 }
@@ -32,15 +28,15 @@ float Shipment::get_cost() const{
     return cost;
 }
 
-Letter::Letter(string input_name)
-    : Shipment(input_name)
+Letter::Letter(string input_name, City& destin)
+    : Shipment(input_name, destin)
 {
     set_cost(5.54982623);
     set_expenses(1.0);
 }
 
-Package::Package(string input_name, float package_weight)
-    : Shipment(input_name)
+Package::Package(string input_name, City& destin, float package_weight)
+    : Shipment(input_name, destin)
 {
     set_weight(package_weight);
     float new_cost = package_weight * 2.5;
@@ -111,4 +107,23 @@ Mailbox::Mailbox(string input_name)
     float new_expenses = 0.4;
     set_base_price(new_price);
     set_expenses(new_expenses);
+}
+
+
+void Container::add_shipment(Shipment shipment){
+    std::string shipment_name = shipment.get_name();
+    shipments.insert({shipment_name, shipment});
+}
+
+void Container::remove_shipment(Shipment shipment){
+    std::string shipment_name = shipment.get_name();
+    shipments.erase(shipment_name);
+}
+
+std::map<std::string, Shipment> Container::get_shipments() const {
+    return shipments;
+}
+
+void HQ::send_shipment(Shipment ship){
+    remove_shipment(ship);
 }
