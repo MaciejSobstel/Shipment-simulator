@@ -11,6 +11,7 @@ public:
     void add_shipment(Shipment shipment);
     void remove_shipment(Shipment shipment);
     std::map<std::string, Shipment> get_shipments() const;
+    void print_shipments() const;
 };
 
 class City : public Container{
