@@ -19,7 +19,10 @@ class City : public Container{
     std::string name;
 public:
     City(std::string n, float dist): name(n), distance(dist) {};
-    float get_distance() const {return distance;};
+    float get_distance() const                      {return distance;};
+    void set_distance(float new_distance)           { distance = new_distance; };
+    std::string get_name() const                    { return name; };
+    void set_name(std::string new_name)             { name = new_name; };
 };
 
 class HQ : public Container{
@@ -27,7 +30,7 @@ class HQ : public Container{
 public:
     HQ(float input_balance): balance(input_balance) {};
     void send_shipment(Shipment ship);
-    void set_balance(float new_balance)          { balance = new_balance; };
-    void addjust_balance(float gain)             { set_balance(get_balance() + gain);};
-    float get_balance() const {return balance;};
+    void set_balance(float new_balance)             { balance = new_balance; };
+    void addjust_balance(float gain)                { set_balance(get_balance() + gain);};
+    float get_balance() const                       {return balance;};
 };
