@@ -20,6 +20,7 @@ class City : public Container{
 public:
     City(std::string n, float dist): name(n), distance(dist) {};
     float get_distance() const {return distance;};
+    string get_name() const {return name;}
 };
 
 class HQ : public Container{

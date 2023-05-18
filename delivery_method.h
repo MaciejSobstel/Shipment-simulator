@@ -5,6 +5,7 @@ class Delivery_method{
     float base_price;
     float expenses;
     std::string name;
+    std::string delivery_type;
 public:
     Delivery_method(std::string input_name);
     void set_name(std::string new_name);
@@ -13,6 +14,8 @@ public:
     float get_base_price() const;
     void set_expenses(float new_expenses);
     float get_exepenses() const;
+    void set_delivery_type(std::string new_del_type);
+    std::string get_delivery_type() const;
 };
 
 class Parcel_locker : public Delivery_method

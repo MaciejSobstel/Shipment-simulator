@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "shipment.h"
+#include "container.cpp"
 
 using namespace std;
 
@@ -33,15 +34,36 @@ bool Shipment::isCitySame(const City& obj) const{
     return &destination == &obj;
 }
 
-Letter::Letter(string input_name, City& destin)
-    : Shipment(input_name, destin)
+void Shipment::set_delivery_type(string new_del_type){
+    delivery_type = new_del_type;
+}
+
+string Shipment::get_delivery_type() const{
+    return delivery_type;
+}
+
+void Shipment::print() const{
+    string name = get_name();
+    string destin = get_destination().get_name();
+    string del_type = get_delivery_type();
+    float cos = get_cost();
+    float ex = get_expenses();
+    cout << "Name: " << name << endl;
+    cout << "Destination: " << destin << endl;
+    cout << "Delivery type: " << del_type << endl;
+    cout << "Cost: " << cos << endl;
+    cout << "Expenses: " << ex << endl;
+}
+
+Letter::Letter(string input_name, City& destin, string del_type)
+    : Shipment(input_name, destin, del_type)
 {
     set_cost(5.54982623);
     set_expenses(1.0);
 }
 
-Package::Package(string input_name, City& destin, float package_weight)
-    : Shipment(input_name, destin)
+Package::Package(string input_name, City& destin, string del_type, float package_weight)
+    : Shipment(input_name, destin, del_type)
 {
     set_weight(package_weight);
     float new_cost = package_weight * 2.5;

@@ -33,6 +33,14 @@ float Delivery_method::get_exepenses() const{
     return expenses;
 }
 
+void Delivery_method::set_delivery_type(string new_del_type){
+    delivery_type = new_del_type;
+}
+
+string Delivery_method::get_delivery_type() const{
+    return delivery_type;
+}
+
 Parcel_locker::Parcel_locker(string input_name)
     : Delivery_method(input_name)
 {
@@ -40,7 +48,7 @@ Parcel_locker::Parcel_locker(string input_name)
     float new_expenses = 0.3;
     set_base_price(new_price);
     set_expenses(new_expenses);
-
+    set_delivery_type("Parcel locker");
 }
 
 Delivery_man::Delivery_man(string input_name)
@@ -50,6 +58,7 @@ Delivery_man::Delivery_man(string input_name)
     float new_expenses = 0.5;
     set_base_price(new_price);
     set_expenses(new_expenses);
+    set_delivery_type("Delivery man");
 }
 
 Mailbox::Mailbox(string input_name)
@@ -59,4 +68,5 @@ Mailbox::Mailbox(string input_name)
     float new_expenses = 0.4;
     set_base_price(new_price);
     set_expenses(new_expenses);
+    set_delivery_type("Mailbox");
 }
