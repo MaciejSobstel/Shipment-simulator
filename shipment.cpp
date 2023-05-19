@@ -49,10 +49,10 @@ void Shipment::print() const{
     float cos = get_cost();
     float ex = get_expenses();
     cout << "Name: " << name << endl;
-    cout << "Destination: " << destin << endl;
-    cout << "Delivery type: " << del_type << endl;
-    cout << "Cost: " << cos << endl;
-    cout << "Expenses: " << ex << endl;
+    cout << "   Destination: " << destin << endl;
+    cout << "   Delivery type: " << del_type << endl;
+    cout << "   Cost: " << cos << endl;
+    cout << "   Expenses: " << ex;
 }
 
 Letter::Letter(string input_name, City& destin, string del_type)

@@ -21,9 +21,14 @@ std::map<std::string, Shipment> Container::get_shipments() const {
 
 void Container::print_shipments() const {
     map<string, Shipment> ship_map = get_shipments();
+    int shipCount = 1;
     cout << "Here's what we have in storage:\n";
     for (auto it = ship_map.begin(); it != ship_map.end(); ++it) {
-        cout << it->first << endl;
+        const Shipment& shipment = it->second;
+        cout << "1.[";
+        shipment.print();
+        cout << "]" << endl;
+        shipCount++;
     }
     cout << endl;
 }
