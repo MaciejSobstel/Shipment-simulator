@@ -6,6 +6,27 @@
 
 using namespace std;
 
+void Game::add_city(City& city){
+    string city_name = city.get_name();
+    cities.insert({city_name, city});
+}
+
+void Game::remove_city(City& city){
+    string city_name = city.get_name();
+    cities.erase(city_name);
+}
+
+void Game::print_cities() const {
+    map<string, City&> cities_map = get_cities();
+    int cityCount = 1;
+    cout << "Cities:\n";
+    for (auto it = cities_map.begin(); it != cities_map.end(); ++it) {
+        cout << cityCount << ". " << it->first << endl;
+        cityCount++;
+    }
+    cout << endl;
+}
+
 bool Game::isDeliveryTypeSame(Shipment shipment, Delivery_method del_method) const{
     string shipment_del_type = shipment.get_delivery_type();
     string delivery_del_type = del_method.get_delivery_type();
@@ -24,12 +45,15 @@ string Game::RandomiseDeliveryType() const{
     return choices[randomIndex];
 }
 
-City& Game::RandomiseCity(City* cities[], int numCities) const{
+City& Game::RandomiseCity() const{
+    map<string, City&> cities_map = get_cities();
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<> dist(0, numCities - 1);
+    uniform_int_distribution<> dist(0, cities_map.size() - 1);
     int randomIndex = dist(gen);
-    return *cities[randomIndex];
+    auto it = cities_map.begin();
+    std::advance(it, randomIndex);
+    return it->second;
 }
 
 float Game::RandomiseWeight(){
@@ -60,13 +84,13 @@ string Game::generatePackageName(){
     return result;
 }
 
-Shipment Game::generateShipment(City* cities[], int numCities){
+Shipment Game::generateShipment(){
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<int> distribution(0, 1);
 
     int randomNumber = distribution(gen);
-    City& destin = RandomiseCity(cities, numCities);
+    City& destin = RandomiseCity();
     string del_type = RandomiseDeliveryType();
     if (randomNumber == 0) {
         string name = generateLetterName();

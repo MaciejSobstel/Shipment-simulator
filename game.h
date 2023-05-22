@@ -6,7 +6,7 @@ class Game{
     int round_count;
     int package_num;
     int letter_num;
-
+    std::map<std::string, City&> cities;
 public:
     Game() : round_count(1), package_num(1), letter_num(1){}
     void setRoundCount(int count) { round_count = count; }
@@ -17,12 +17,16 @@ public:
     void countPackageNumUp() { package_num = package_num + 1;}
     void setLetterNum(int num) { letter_num = num; }
     int getLetterNum() const { return letter_num; }
+    void add_city(City& city);
+    void remove_city(City& city);
+    void print_cities() const;
+    std::map<std::string, City&> get_cities() const { return cities; }
     void countLetterNumUp() { letter_num = letter_num + 1;};
     bool isDeliveryTypeSame(Shipment shipment, Delivery_method del_method) const;
     std::string RandomiseDeliveryType() const;
-    City& RandomiseCity(City* cities[], int numCities) const;
+    City& RandomiseCity() const;
     float RandomiseWeight();
     std::string generateLetterName();
     std::string generatePackageName();
-    Shipment generateShipment(City* cities[], int numCities);
+    Shipment generateShipment();
 };
