@@ -23,12 +23,16 @@ void Container::print_shipments() const {
     map<string, Shipment> ship_map = get_shipments();
     int shipCount = 1;
     cout << "Here's what we have in storage:\n";
-    for (auto it = ship_map.begin(); it != ship_map.end(); ++it) {
+    if (ship_map.empty()) {
+        cout << "Empty" << endl;
+    } else {
+        for (auto it = ship_map.begin(); it != ship_map.end(); ++it) {
         const Shipment& shipment = it->second;
         cout << shipCount << ".[";
         shipment.print();
         cout << "]" << endl;
         shipCount++;
+        }
     }
     cout << endl;
 }
@@ -41,9 +45,16 @@ void HQ::print_delivery_methods() const {
     map<string, Delivery_method&> del_method_map = get_delivery_methods();
     int delCount = 1;
     cout << "Here are our available delivery methods:\n";
-    for (auto it = del_method_map.begin(); it != del_method_map.end(); ++it) {
-        cout << delCount << ". " << it->first << endl;
+    if (del_method_map.empty()) {
+        cout << "Empty" << endl;
+    } else {
+        for (auto it = del_method_map.begin(); it != del_method_map.end(); ++it) {
+        const Delivery_method& del_met = it->second;
+        cout << delCount << ".[";
+        del_met.print();
+        cout << "]" << endl;
         delCount++;
+        }
     }
     cout << endl;
 }

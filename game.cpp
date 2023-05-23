@@ -21,8 +21,12 @@ void Game::print_cities() const {
     int cityCount = 1;
     cout << "Cities:\n";
     for (auto it = cities_map.begin(); it != cities_map.end(); ++it) {
+        const City& city = it->second;
+        float dist = city.get_distance();
         cout << cityCount << ". " << it->first << endl;
+        cout << "Distance from HQ: " << dist << "km" << endl;
         cityCount++;
+        city.print_shipments();
     }
     cout << endl;
 }
@@ -99,5 +103,55 @@ Shipment Game::generateShipment(){
         string name = generatePackageName();
         float weight = RandomiseWeight();
         return Package(name, destin, del_type, weight);
+    }
+}
+
+void Game::genShipmentInCity(){
+    City& city = RandomiseCity();
+    Shipment ship = generateShipment();
+    city.add_shipment(ship);
+}
+
+bool Game::checkIfDelMetAvailable(HQ& hq, Delivery_method& del_method) {
+    std::map<std::string, Delivery_method&> delivery_methods = hq.get_delivery_methods();
+    for (const auto& methodPair : delivery_methods) {
+        if (&methodPair.second == &del_method) {
+            cout << "true" << endl;
+            return true;
+        }
+    }
+    cout << "false" << endl;
+    return false;
+}
+
+float calCost(Shipment shipment, Delivery_method del_met, City city){
+    float ship_cost = shipment.get_cost();
+    float del_cost = del_met.get_base_price();
+    float dist = city.get_distance();
+    float result = dist * ship_cost * del_cost;
+    return result;
+}
+
+float calExpenses(Shipment shipment, Delivery_method del_met, City city){
+    float ship_ex = shipment.get_expenses();
+    float del_ex = del_met.get_expenses();
+    float dist = city.get_distance();
+    float result = dist * ship_ex * del_ex;
+    return result;
+}
+
+void Game::retreivePackage(City& city, Delivery_method& del_method, HQ& hq){
+    if (!checkIfDelMetAvailable(hq, del_method)){
+        cout << "There's no delivery method like that available to you." << endl;
+    }
+    else{
+        map<string, Shipment> cityShipments = city.get_shipments();
+
+        for (const auto& shipmentPair : cityShipments) {
+            Shipment shipment = shipmentPair.second;
+            hq.add_shipment(shipment);
+        }
+        cityShipments.clear();
+        city.set_shipments(cityShipments);
     }
 }

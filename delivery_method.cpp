@@ -29,7 +29,7 @@ void Delivery_method::set_expenses(float new_expenses){
     expenses = round(new_expenses * 100) / 100;
 }
 
-float Delivery_method::get_exepenses() const{
+float Delivery_method::get_expenses() const{
     return expenses;
 }
 
@@ -39,6 +39,17 @@ void Delivery_method::set_delivery_type(string new_del_type){
 
 string Delivery_method::get_delivery_type() const{
     return delivery_type;
+}
+
+void Delivery_method::print() const{
+    string name = get_name();
+    string del_type = get_delivery_type();
+    float cos = get_base_price();
+    float ex = get_expenses();
+    cout << "Name: " << name << endl;
+    cout << "   Delivery type: " << del_type << endl;
+    cout << "   Cost: " << cos << " per km" << endl;
+    cout << "   Expenses: " << ex << " per km" << endl;
 }
 
 Parcel_locker::Parcel_locker(string input_name)

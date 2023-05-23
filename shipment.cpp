@@ -51,8 +51,8 @@ void Shipment::print() const{
     cout << "Name: " << name << endl;
     cout << "   Destination: " << destin << endl;
     cout << "   Delivery type: " << del_type << endl;
-    cout << "   Cost: " << cos << endl;
-    cout << "   Expenses: " << ex << endl;
+    cout << "   Cost: " << cos << " per km" << endl;
+    cout << "   Expenses: " << ex << " per km" << endl;
 }
 
 Letter::Letter(string input_name, City& destin, string del_type)

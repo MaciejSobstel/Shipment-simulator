@@ -13,9 +13,10 @@ public:
     void set_base_price(float new_price);
     float get_base_price() const;
     void set_expenses(float new_expenses);
-    float get_exepenses() const;
+    float get_expenses() const;
     void set_delivery_type(std::string new_del_type);
     std::string get_delivery_type() const;
+    void print() const;
 };
 
 class Parcel_locker : public Delivery_method

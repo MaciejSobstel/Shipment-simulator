@@ -13,6 +13,9 @@ public:
     void add_shipment(Shipment shipment);
     void remove_shipment(Shipment shipment);
     std::map<std::string, Shipment> get_shipments() const;
+    void set_shipments(const std::map<std::string, Shipment>& newShipments) {
+        shipments = newShipments;
+    }
     void print_shipments() const;
 };
 

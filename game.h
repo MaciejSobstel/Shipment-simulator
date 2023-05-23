@@ -29,4 +29,9 @@ public:
     std::string generateLetterName();
     std::string generatePackageName();
     Shipment generateShipment();
+    void genShipmentInCity();
+    bool checkIfDelMetAvailable(HQ& hq, Delivery_method& del_method);
+    float calCost(Shipment shipment, Delivery_method del_met, City city);
+    float calExpenses(Shipment shipment, Delivery_method del_met, City city);
+    void retreivePackage(City& city, Delivery_method& del_method, HQ& hq);
 };
