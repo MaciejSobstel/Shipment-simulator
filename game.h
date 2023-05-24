@@ -30,8 +30,9 @@ public:
     std::string generatePackageName();
     Shipment generateShipment();
     void genShipmentInCity();
-    bool checkIfDelMetAvailable(HQ& hq, Delivery_method& del_method);
-    float calCost(Shipment shipment, Delivery_method del_met, City city);
-    float calExpenses(Shipment shipment, Delivery_method del_met, City city);
-    void retreivePackage(City& city, Delivery_method& del_method, HQ& hq);
+    Delivery_method& getDelMethod(HQ& hq, std::string del_method) const;
+    Shipment getShipment(HQ& hq, std::string shipment) const;
+    float calCost(std::string shipment, std::string del_met, City city, HQ& hq) const;
+    float calExpenses(std::string shipment, std::string del_met, City city, HQ& hq) const;
+    void retreivePackage(City& city, string del_method, HQ& hq);
 };

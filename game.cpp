@@ -112,19 +112,27 @@ void Game::genShipmentInCity(){
     city.add_shipment(ship);
 }
 
-bool Game::checkIfDelMetAvailable(HQ& hq, Delivery_method& del_method) {
-    std::map<std::string, Delivery_method&> delivery_methods = hq.get_delivery_methods();
-    for (const auto& methodPair : delivery_methods) {
-        if (&methodPair.second == &del_method) {
-            cout << "true" << endl;
-            return true;
+Delivery_method& Game::getDelMethod(HQ& hq, string del_method) const {
+    std::map<std::string, Delivery_method&> delivery_methods_map = hq.get_delivery_methods();
+    for (const auto& methodPair : delivery_methods_map) {
+        if (methodPair.first == del_method) {
+            return methodPair.second;
         }
     }
-    cout << "false" << endl;
-    return false;
 }
 
-float calCost(Shipment shipment, Delivery_method del_met, City city){
+Shipment Game::getShipment(HQ& hq, string shipment) const{
+    std::map<std::string, Shipment> ship_map = hq.get_shipments();
+    for (const auto& methodPair : ship_map) {
+        if (methodPair.first == shipment) {
+            return methodPair.second;
+        }
+    }
+}
+
+float Game::calCost(string ship, string str_del_met, City city, HQ& hq) const{
+    Shipment shipment = getShipment(hq, ship);
+    Delivery_method& del_met = getDelMethod(hq, str_del_met);
     float ship_cost = shipment.get_cost();
     float del_cost = del_met.get_base_price();
     float dist = city.get_distance();
@@ -132,7 +140,9 @@ float calCost(Shipment shipment, Delivery_method del_met, City city){
     return result;
 }
 
-float calExpenses(Shipment shipment, Delivery_method del_met, City city){
+float Game::calExpenses(string str_ship, string str_del_met, City city, HQ& hq) const{
+    Shipment shipment = getShipment(hq, str_ship);
+    Delivery_method& del_met = getDelMethod(hq, str_del_met);
     float ship_ex = shipment.get_expenses();
     float del_ex = del_met.get_expenses();
     float dist = city.get_distance();
@@ -140,18 +150,14 @@ float calExpenses(Shipment shipment, Delivery_method del_met, City city){
     return result;
 }
 
-void Game::retreivePackage(City& city, Delivery_method& del_method, HQ& hq){
-    if (!checkIfDelMetAvailable(hq, del_method)){
-        cout << "There's no delivery method like that available to you." << endl;
+void Game::retreivePackage(City& city, string str_del_met, HQ& hq){
+    Delivery_method& del_met = getDelMethod(hq, str_del_met);
+    map<string, Shipment> cityShipments = city.get_shipments();
+    for (const auto& shipmentPair : cityShipments) {
+        Shipment shipment = shipmentPair.second;
+        hq.add_shipment(shipment);
     }
-    else{
-        map<string, Shipment> cityShipments = city.get_shipments();
-
-        for (const auto& shipmentPair : cityShipments) {
-            Shipment shipment = shipmentPair.second;
-            hq.add_shipment(shipment);
-        }
-        cityShipments.clear();
-        city.set_shipments(cityShipments);
-    }
+    cityShipments.clear();
+    city.set_shipments(cityShipments);
+    hq.remove_delivery_method(del_met);
 }
