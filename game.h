@@ -17,11 +17,11 @@ public:
     void countPackageNumUp() { package_num = package_num + 1;}
     void setLetterNum(int num) { letter_num = num; }
     int getLetterNum() const { return letter_num; }
+    void countLetterNumUp() { letter_num = letter_num + 1;};
     void add_city(City& city);
     void remove_city(City& city);
     void print_cities() const;
     std::map<std::string, City&> get_cities() const { return cities; }
-    void countLetterNumUp() { letter_num = letter_num + 1;};
     bool isDeliveryTypeSame(Shipment shipment, Delivery_method del_method) const;
     std::string RandomiseDeliveryType() const;
     City& RandomiseCity() const;
@@ -30,7 +30,7 @@ public:
     std::string generatePackageName();
     Shipment generateShipment();
     void genShipmentInCity();
-    Delivery_method& getDelMethod(HQ& hq, std::string del_method) const;
+    Delivery_method getDelMethod(HQ& hq, std::string del_method) const;
     Shipment getShipment(HQ& hq, std::string shipment) const;
     float calCost(std::string shipment, std::string del_met, City city, HQ& hq) const;
     float calExpenses(std::string shipment, std::string del_met, City city, HQ& hq) const;

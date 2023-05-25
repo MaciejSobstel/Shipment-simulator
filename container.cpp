@@ -42,7 +42,7 @@ void HQ::send_shipment(Shipment ship){
 }
 
 void HQ::print_delivery_methods() const {
-    map<string, Delivery_method&> del_method_map = get_delivery_methods();
+    map<string, Delivery_method> del_method_map = get_delivery_methods();
     int delCount = 1;
     cout << "Here are our available delivery methods:\n";
     if (del_method_map.empty()) {
@@ -59,12 +59,62 @@ void HQ::print_delivery_methods() const {
     cout << endl;
 }
 
-void HQ::add_delivery_method(Delivery_method& delivery_method){
+void HQ::add_delivery_method(Delivery_method delivery_method){
     string delivery_method_name = delivery_method.get_name();
     delivery_methods.insert({delivery_method_name, delivery_method});
 }
 
-void HQ::remove_delivery_method(Delivery_method& delivery_method){
+void HQ::remove_delivery_method(Delivery_method delivery_method){
     string del_meth_name = delivery_method.get_name();
     delivery_methods.erase(del_meth_name);
+}
+
+string HQ::generate_parcel_locker_name(){
+    int par_lock_num = getParcelLockerNum();
+    string str_num = to_string(par_lock_num);
+    countParcelLockerNumUp();
+    string result = "Parcel locker " + str_num;
+    return result;
+}
+
+string HQ::generate_mailbox_name(){
+    int mail_num = getMailboxNum();
+    string str_num = to_string(mail_num);
+    countParcelLockerNumUp();
+    string result = "Mailbox " + str_num;
+    return result;
+}
+
+string HQ::generate_delivery_man_name(){
+    int dm_num = getDeliveryManNum();
+    string str_num = to_string(dm_num);
+    countParcelLockerNumUp();
+    string result = "Delivery man " + str_num;
+    return result;
+}
+
+void HQ::buy_parcel_locker(){
+    string name = generate_parcel_locker_name();
+    Parcel_locker par_lock(name);
+    addjust_balance(-120);
+    add_delivery_method(par_lock);
+}
+
+void HQ::buy_mailbox(){
+    string name = generate_mailbox_name();
+    Mailbox mail(name);
+    addjust_balance(-200);
+    add_delivery_method(mail);
+}
+
+void HQ::buy_delivery_man(){
+    string name = generate_delivery_man_name();
+    Delivery_man dm(name);
+    addjust_balance(-300);
+    add_delivery_method(dm);
+}
+
+void HQ::print_balance() const{
+    float bal = get_balance();
+    cout << "Your current balance: " << bal <<"$" << endl;
 }

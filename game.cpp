@@ -112,8 +112,8 @@ void Game::genShipmentInCity(){
     city.add_shipment(ship);
 }
 
-Delivery_method& Game::getDelMethod(HQ& hq, string del_method) const {
-    std::map<std::string, Delivery_method&> delivery_methods_map = hq.get_delivery_methods();
+Delivery_method Game::getDelMethod(HQ& hq, string del_method) const {
+    std::map<std::string, Delivery_method> delivery_methods_map = hq.get_delivery_methods();
     for (const auto& methodPair : delivery_methods_map) {
         if (methodPair.first == del_method) {
             return methodPair.second;
@@ -132,7 +132,7 @@ Shipment Game::getShipment(HQ& hq, string shipment) const{
 
 float Game::calCost(string ship, string str_del_met, City city, HQ& hq) const{
     Shipment shipment = getShipment(hq, ship);
-    Delivery_method& del_met = getDelMethod(hq, str_del_met);
+    Delivery_method del_met = getDelMethod(hq, str_del_met);
     float ship_cost = shipment.get_cost();
     float del_cost = del_met.get_base_price();
     float dist = city.get_distance();
@@ -142,7 +142,7 @@ float Game::calCost(string ship, string str_del_met, City city, HQ& hq) const{
 
 float Game::calExpenses(string str_ship, string str_del_met, City city, HQ& hq) const{
     Shipment shipment = getShipment(hq, str_ship);
-    Delivery_method& del_met = getDelMethod(hq, str_del_met);
+    Delivery_method del_met = getDelMethod(hq, str_del_met);
     float ship_ex = shipment.get_expenses();
     float del_ex = del_met.get_expenses();
     float dist = city.get_distance();
@@ -151,7 +151,7 @@ float Game::calExpenses(string str_ship, string str_del_met, City city, HQ& hq) 
 }
 
 void Game::retreivePackage(City& city, string str_del_met, HQ& hq){
-    Delivery_method& del_met = getDelMethod(hq, str_del_met);
+    Delivery_method del_met = getDelMethod(hq, str_del_met);
     map<string, Shipment> cityShipments = city.get_shipments();
     for (const auto& shipmentPair : cityShipments) {
         Shipment shipment = shipmentPair.second;
