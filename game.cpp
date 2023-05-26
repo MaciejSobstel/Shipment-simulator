@@ -2,6 +2,7 @@
 #include <random>
 #include <iomanip>
 #include <string>
+#include <stdexcept>
 #include "game.h"
 
 using namespace std;
@@ -119,6 +120,7 @@ Delivery_method Game::getDelMethod(HQ& hq, string del_method) const {
             return methodPair.second;
         }
     }
+    throw runtime_error("Delivery method not found");
 }
 
 Shipment Game::getShipment(HQ& hq, string shipment) const{
@@ -128,6 +130,7 @@ Shipment Game::getShipment(HQ& hq, string shipment) const{
             return methodPair.second;
         }
     }
+    throw runtime_error("Shipment not found");
 }
 
 float Game::calCost(string ship, string str_del_met, City city, HQ& hq) const{
