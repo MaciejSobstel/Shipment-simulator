@@ -95,7 +95,7 @@ Shipment Game::generateShipment(){
     uniform_int_distribution<int> distribution(0, 1);
 
     int randomNumber = distribution(gen);
-    City& destin = RandomiseCity();
+    string destin = RandomiseCity().get_name();
     string del_type = RandomiseDeliveryType();
     if (randomNumber == 0) {
         string name = generateLetterName();
