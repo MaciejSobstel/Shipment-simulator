@@ -24,10 +24,14 @@ class City : public Container{
     std::string name;
 public:
     City(std::string n, float dist): name(n), distance(dist) {};
+    City(){};
     float get_distance() const {return distance;}
     void set_distance(float new_distance) {distance = new_distance;}
     std::string get_name() const {return name;}
     void set_name(std::string new_name) {name = new_name;}
+
+    inline friend std::ostream& operator<<(ostream& os, const City& city);
+    inline friend std::istream& operator>>(istream& is, City& city);
 };
 
 class HQ : public Container{

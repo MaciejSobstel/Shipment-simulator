@@ -164,3 +164,36 @@ void Game::retreivePackage(City& city, string str_del_met, HQ& hq){
     city.set_shipments(cityShipments);
     hq.remove_delivery_method(del_met);
 }
+
+inline std::ostream& operator<<(ostream& os, const Game& game){
+    os << "\tGAME{\n" << game.round_count <<",\n" <<game.package_num <<",\n" <<game.letter_num <<",\n";
+    for(const auto& kv: game.cities){
+        os << kv.second;
+    }
+    os << "}" <<endl;
+    return os;
+}
+
+inline std::istream& operator>>(istream& is, Game& game){
+    string s;
+    is >> s;
+    is >> s;
+    s.pop_back();
+    game.setRoundCount(std::stoi(s));
+    is >> s;
+    s.pop_back();
+    game.setPackageNum(std::stoi(s));
+    is >> s;
+    s.pop_back();
+    game.setLetterNum(std::stoi(s));
+    char c;
+    is >> c;
+    while (c!='}'){
+        is.putback(c);
+        City new_city;
+        is >> new_city;
+        game.add_city(new_city);
+        is >> c;
+    }
+    return is;
+}

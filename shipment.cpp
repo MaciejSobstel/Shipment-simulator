@@ -2,7 +2,7 @@
 #include <cmath>
 
 #include "shipment.h"
-#include "container.cpp"
+#include "container.h"
 
 using namespace std;
 
@@ -53,6 +53,38 @@ void Shipment::print() const{
     cout << "   Delivery type: " << del_type << endl;
     cout << "   Cost: " << cos << " per km" << endl;
     cout << "   Expenses: " << ex << " per km" << endl;
+}
+
+inline std::ostream& operator<<(ostream& os, const Shipment& shipment){
+    os << "\tSHIPMENT{\n" << shipment.destination.get_name() <<",\n";
+    os << shipment.get_cost() <<",\n";
+    os << shipment.get_expenses() <<",\n";
+    os << shipment.get_name() <<",\n";
+    os << shipment.get_delivery_type() <<",\n";
+    os << "}" <<endl;
+    return os;
+}
+
+inline std::istream& operator>>(istream& is, Shipment& shipment){
+    string s;
+    is >> s;
+    is >> s;
+    s.pop_back();
+    shipment.destination.set_name(s);
+    is >> s;
+    s.pop_back();
+    shipment.set_cost(stof(s));
+    is >> s;
+    s.pop_back();
+    shipment.set_expenses(stof(s));
+    is >> s;
+    s.pop_back();
+    shipment.set_name(s);
+    is >> s;
+    s.pop_back();
+    shipment.set_delivery_type(s);
+    is >> s;
+    return is;
 }
 
 Letter::Letter(string input_name, City& destin, string del_type)

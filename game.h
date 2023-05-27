@@ -35,4 +35,9 @@ public:
     float calCost(std::string shipment, std::string del_met, City city, HQ& hq) const;
     float calExpenses(std::string shipment, std::string del_met, City city, HQ& hq) const;
     void retreivePackage(City& city, string del_method, HQ& hq);
+    
+    // void loadState(std::string file="GameSave.txt");
+
+    inline friend std::ostream& operator<<(ostream& os, const Game& game);
+    inline friend std::istream& operator>>(istream& is, Game& game);
 };

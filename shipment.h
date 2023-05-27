@@ -12,6 +12,7 @@ class Shipment{
     std::string delivery_type;
 public:
     Shipment(std::string input_name, City& destin, std::string del_type): destination(destin), name(input_name), delivery_type(del_type) {};
+    Shipment(City& destin): destination(destin) {};
     void set_name(std::string new_name);
     std::string get_name() const;
     City& get_destination() const {return destination;}
@@ -23,6 +24,9 @@ public:
     void set_delivery_type(std::string new_del_type);
     std::string get_delivery_type() const;
     void print() const;
+
+    inline friend std::ostream& operator<<(ostream& os, const Shipment& shipment);
+    inline friend std::istream& operator>>(istream& is, Shipment& shipment);
 };
 
 class Letter : public Shipment

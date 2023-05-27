@@ -37,6 +37,37 @@ void Container::print_shipments() const {
     cout << endl;
 }
 
+inline std::ostream& operator<<(ostream& os, const City& city){
+    os << "\tCITY{\n" << city.distance <<",\n" <<city.name <<",\n";
+    for(const auto& kv: city.shipments){
+        os << kv.second;
+    }
+    os << "}" <<endl;
+    return os;
+}
+
+inline std::istream& operator>>(istream& is, City& city){
+    string s;
+    is >> s;
+    is >> s;
+    s.pop_back();
+    city.set_distance(std::stof(s));
+    is >> s;
+    s.pop_back();
+    city.set_name(s);
+    char c;
+    is >> c;
+    while (c!='}'){
+        is.putback(c);
+        City temp;
+        Shipment new_shipment(temp);
+        is >> new_shipment;
+        city.add_shipment(new_shipment);
+        is >> c;
+    }
+    return is;
+}
+
 void HQ::send_shipment(Shipment ship){
     remove_shipment(ship);
 }
