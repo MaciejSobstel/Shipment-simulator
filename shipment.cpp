@@ -11,8 +11,7 @@ void Container::add_shipment(Shipment shipment){
     shipments.insert({shipment_name, shipment});
 }
 
-void Container::remove_shipment(Shipment shipment){
-    std::string shipment_name = shipment.get_name();
+void Container::remove_shipment(string shipment_name){
     shipments.erase(shipment_name);
 }
 
@@ -68,10 +67,6 @@ inline std::istream& operator>>(istream& is, City& city){
     return is;
 }
 
-void HQ::send_shipment(Shipment ship){
-    remove_shipment(ship);
-}
-
 void HQ::print_delivery_methods() const {
     map<string, Delivery_method> del_method_map = get_delivery_methods();
     int delCount = 1;
@@ -125,24 +120,37 @@ string HQ::generate_delivery_man_name(){
 }
 
 void HQ::buy_parcel_locker(){
-    string name = generate_parcel_locker_name();
-    Parcel_locker par_lock(name);
-    addjust_balance(-120);
-    add_delivery_method(par_lock);
+    if(get_balance() < 120){
+        cout<<"Not enough money";
+    }else {
+        string name = generate_parcel_locker_name();
+        Parcel_locker par_lock(name);
+        addjust_balance(-120);
+        add_delivery_method(par_lock);
+    }
 }
 
 void HQ::buy_mailbox(){
-    string name = generate_mailbox_name();
-    Mailbox mail(name);
-    addjust_balance(-200);
-    add_delivery_method(mail);
+    if (get_balance() < 200){
+        cout<<"Not enough money";
+    }
+    else {
+        string name = generate_mailbox_name();
+        Mailbox mail(name);
+        addjust_balance(-200);
+        add_delivery_method(mail);
+    }
 }
 
 void HQ::buy_delivery_man(){
-    string name = generate_delivery_man_name();
-    Delivery_man dm(name);
-    addjust_balance(-300);
-    add_delivery_method(dm);
+    if (get_balance() < 300){
+        cout<<"Not enough money";
+    } else{
+        string name = generate_delivery_man_name();
+        Delivery_man dm(name);
+        addjust_balance(-300);
+        add_delivery_method(dm);
+    }
 }
 
 void HQ::print_balance() const{
@@ -162,6 +170,12 @@ void HQ::loadState(std::string file="HQSave.txt"){
     f.open(file);
     f >> *this;
     f.close();
+}
+
+void HQ::addWorkingDeliveryMethod(Delivery_method delivery_method){
+    std::map<std::string, Delivery_method> del_methods = get_delivery_methods();
+    std::map<std::string, Delivery_method> working_del_methods = getWorkingDeliveryMethods();
+
 }
 
 inline std::ostream& operator<<(ostream& os, const HQ& hq){

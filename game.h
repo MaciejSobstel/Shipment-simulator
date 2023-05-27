@@ -37,6 +37,7 @@ public:
     Delivery_method getDelMethod(HQ& hq, std::string del_method) const;
     Shipment getShipment(HQ& hq, std::string shipment) const;
     void retreivePackage(string city, string del_method, HQ& hq);
+    void sendPackage(string city_name, string del_method, string shipment_name, HQ& hq);
     
     void saveState(std::string file) const;
     void loadState(std::string file);

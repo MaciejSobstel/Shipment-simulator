@@ -155,7 +155,7 @@ float Game::calExpenses(string str_ship, string str_del_met, City city, HQ& hq) 
     float del_ex = del_met.get_expenses();
     float dist = city.get_distance();
     float result = dist * ship_ex * del_ex;
-    return result;
+    return -result;
 }
 
 void Game::retreivePackage(string city_name, string str_del_met, HQ& hq){
@@ -168,7 +168,24 @@ void Game::retreivePackage(string city_name, string str_del_met, HQ& hq){
     }
     cityShipments.clear();
     city.set_shipments(cityShipments);
-    hq.remove_delivery_method(del_met);
+}
+
+void Game::sendPackage(string city_name, string del_method, string shipment_name, HQ& hq){
+    map<string, Shipment> shipmap = hq.get_shipments();
+    hq.remove_shipment(shipment_name);
+    Shipment ship = shipmap[shipment_name];
+    string destination = ship.get_destination();
+    string delivery = ship.get_delivery_type();
+    map<string, City> citymap = get_cities();
+    float exp = calExpenses(shipment_name, del_method, citymap[city_name], hq);
+    hq.addjust_balance(exp);
+    if (destination == city_name && delivery == del_method){
+        float cos = calCost(shipment_name, del_method, citymap[city_name], hq);
+        hq.addjust_balance(cos);
+    }else{
+        cout<<"You get fined 50$ for sending a package with wrong data";
+        hq.addjust_balance(-50);
+    }
 }
 
 void Game::saveState(std::string file="GameSave.txt") const{
