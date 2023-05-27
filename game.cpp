@@ -180,9 +180,8 @@ void Game::retreivePackage(string city_name, HQ& hq){
 }
 
 void Game::sendPackage(string city_name, string delivery_type, string shipment_name, HQ& hq){
-    map<string, Shipment> shipmap = hq.get_shipments();
+    Shipment ship = getShipment(hq, shipment_name);
     hq.remove_shipment(shipment_name);
-    Shipment ship = shipmap[shipment_name];
     string destination = ship.get_destination();
     string delivery = ship.get_delivery_type();
     map<string, City> citymap = get_cities();

@@ -16,6 +16,7 @@ int main(){
     game.add_city(poznan);
     game.add_city(wroclaw);
     game.add_city(gdansk);
+    game.genShipmentInCity();
     while(running){
         hq.returnDeliveryMethods();
         cout<<"---Round " + to_string(game.getRoundCount()) + "---"<<endl;
@@ -88,10 +89,25 @@ int main(){
                 switch (delivery_option)
                 {
                 case 1:
-                    hq.sendDeliveryMethod("Parcel_locker");
+                    if(hq.sendDeliveryMethod("Parcel_locker") == true)
+                        game.retreivePackage(city_n, hq);
+                    else
+                        cout<<"You don't have this delivery method"<<endl;
                     break;
-                
+                case 2:
+                    if(hq.sendDeliveryMethod("Mailbox") == true)
+                        game.retreivePackage(city_n, hq);
+                    else
+                        cout<<"You don't have this delivery method"<<endl;
+                    break;
+                case 3:
+                    if(hq.sendDeliveryMethod("Delivery_man") == true)
+                        game.retreivePackage(city_n, hq);
+                    else
+                        cout<<"You don't have this delivery method"<<endl;
+                    break;
                 default:
+                    cout<<"Incorrect option"<<endl;
                     break;
                 }
                 break;
@@ -103,7 +119,7 @@ int main(){
             case 7:
                 running = false;
             default:
-                cout<<"Incorrect option";
+                cout<<"Incorrect option"<<endl;
                 break;
             }
         }

@@ -172,17 +172,18 @@ void HQ::loadState(std::string file="HQSave.txt"){
     f.close();
 }
 
-void HQ::sendDeliveryMethod(string del_met_type) {
+bool HQ::sendDeliveryMethod(string del_met_type) {
     auto it = delivery_methods.begin();
     while (it != delivery_methods.end()) {
         if (it->second.get_delivery_type() == del_met_type) {
             const string name = it->second.get_name();
             working_delivery_methods.insert({name, it->second});
             delivery_methods.erase(it);
-            break;
+            return true;
         }
         ++it;
     }
+    return false;
 }
 
 void HQ::returnDeliveryMethods(){
