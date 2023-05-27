@@ -138,28 +138,37 @@ Shipment Game::getShipment(HQ& hq, string shipment) const{
     throw runtime_error("Shipment not found");
 }
 
-float Game::calCost(string ship, string str_del_met, City city, HQ& hq) const{
+float Game::calCost(string ship, string str_del_met_type, City city, HQ& hq) const{
     Shipment shipment = getShipment(hq, ship);
-    Delivery_method del_met = getDelMethod(hq, str_del_met);
     float ship_cost = shipment.get_cost();
-    float del_cost = del_met.get_base_price();
+    float del_cost;
+    if(str_del_met_type == "Parcel_locker")
+        del_cost = 0.5;
+    else if(str_del_met_type == "Delivery_man")
+        del_cost = 1.0;
+    else if(str_del_met_type == "Mailbox")
+        del_cost = 0.8;
     float dist = city.get_distance();
     float result = dist * ship_cost * del_cost;
     return result;
 }
 
-float Game::calExpenses(string str_ship, string str_del_met, City city, HQ& hq) const{
+float Game::calExpenses(string str_ship, string str_del_met_type, City city, HQ& hq) const{
     Shipment shipment = getShipment(hq, str_ship);
-    Delivery_method del_met = getDelMethod(hq, str_del_met);
     float ship_ex = shipment.get_expenses();
-    float del_ex = del_met.get_expenses();
+    float del_ex;
+     if(str_del_met_type == "Parcel_locker")
+        del_ex = 0.3;
+    else if(str_del_met_type == "Delivery_man")
+        del_ex = 0.5;
+    else if(str_del_met_type == "Mailbox")
+        del_ex = 0.4;
     float dist = city.get_distance();
     float result = dist * ship_ex * del_ex;
     return -result;
 }
 
-void Game::retreivePackage(string city_name, string str_del_met, HQ& hq){
-    Delivery_method del_met = getDelMethod(hq, str_del_met);
+void Game::retreivePackage(string city_name, HQ& hq){
     City& city = cities.at(city_name);
     map<string, Shipment> cityShipments = city.get_shipments();
     for (const auto& shipmentPair : cityShipments) {
@@ -170,17 +179,17 @@ void Game::retreivePackage(string city_name, string str_del_met, HQ& hq){
     city.set_shipments(cityShipments);
 }
 
-void Game::sendPackage(string city_name, string del_method, string shipment_name, HQ& hq){
+void Game::sendPackage(string city_name, string delivery_type, string shipment_name, HQ& hq){
     map<string, Shipment> shipmap = hq.get_shipments();
     hq.remove_shipment(shipment_name);
     Shipment ship = shipmap[shipment_name];
     string destination = ship.get_destination();
     string delivery = ship.get_delivery_type();
     map<string, City> citymap = get_cities();
-    float exp = calExpenses(shipment_name, del_method, citymap[city_name], hq);
+    float exp = calExpenses(shipment_name, delivery_type, citymap[city_name], hq);
     hq.addjust_balance(exp);
-    if (destination == city_name && delivery == del_method){
-        float cos = calCost(shipment_name, del_method, citymap[city_name], hq);
+    if (destination == city_name && delivery == delivery_type){
+        float cos = calCost(shipment_name, delivery_type, citymap[city_name], hq);
         hq.addjust_balance(cos);
     }else{
         cout<<"You get fined 50$ for sending a package with wrong data";

@@ -17,6 +17,7 @@ int main(){
     game.add_city(wroclaw);
     game.add_city(gdansk);
     while(running){
+        hq.returnDeliveryMethods();
         cout<<"---Round " + to_string(game.getRoundCount()) + "---"<<endl;
         cout<<"---CHOOSE WHAT YOU WANT TO DO THIS TURN---"<<endl;
         cout<<endl;
@@ -36,6 +37,7 @@ int main(){
             cout<<"6. End round"<<endl;
             cout<<"7. Save and exit"<<endl;
             cin>>option;
+            string city_n;
             switch (option)
             {
             case 1:
@@ -59,11 +61,37 @@ int main(){
                 switch (city_option)
                 {
                 case 1:
-                    game.retreivePackage("Warszawa",);
+                    city_n = "Warszawa";
+                    break;
+                case 2:
+                    city_n = "Kraków";
+                    break;
+                case 3:
+                    city_n = "Poznań";
+                    break;
+                case 4:
+                    city_n = "Wrocław";
+                    break;
+                case 5:
+                    city_n = "Gdańsk";
+                    break;
+                default:
+                    cout<<"Incorrect option"<<endl;
+                    break;
+                }
+                cout<<"Choose delivery method:"<<endl;
+                cout<<"1. Parcel Locker"<<endl;
+                cout<<"2. Mailbox"<<endl;
+                cout<<"3. Delivery man"<<endl;
+                int delivery_option;
+                cin>>delivery_option;
+                switch (delivery_option)
+                {
+                case 1:
+                    hq.sendDeliveryMethod("Parcel_locker");
                     break;
                 
                 default:
-                    cout<<"Incorrect option"<<endl;
                     break;
                 }
                 break;
