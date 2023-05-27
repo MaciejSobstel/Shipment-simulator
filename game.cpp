@@ -3,22 +3,27 @@
 #include <iomanip>
 #include <string>
 #include <stdexcept>
+#include <fstream>
 #include "game.h"
 
 using namespace std;
 
-void Game::add_city(City& city){
+void Game::add_city(City city){
     string city_name = city.get_name();
     cities.insert({city_name, city});
 }
 
-void Game::remove_city(City& city){
+void Game::remove_city(City city){
     string city_name = city.get_name();
     cities.erase(city_name);
 }
 
+City& Game::get_city(string name){
+    return cities.at(name);
+}
+
 void Game::print_cities() const {
-    map<string, City&> cities_map = get_cities();
+    map<string, City> cities_map = get_cities();
     int cityCount = 1;
     cout << "Cities:\n";
     for (auto it = cities_map.begin(); it != cities_map.end(); ++it) {
@@ -39,7 +44,7 @@ bool Game::isDeliveryTypeSame(Shipment shipment, Delivery_method del_method) con
 }
 
 string Game::RandomiseDeliveryType() const{
-    string choices[] = { "Mailbox", "Delivery man", "Parcel locker" };
+    string choices[] = { "Mailbox", "Delivery_man", "Parcel_locker" };
 
     random_device rd;
     mt19937 gen(rd());
@@ -50,15 +55,15 @@ string Game::RandomiseDeliveryType() const{
     return choices[randomIndex];
 }
 
-City& Game::RandomiseCity() const{
-    map<string, City&> cities_map = get_cities();
+City& Game::RandomiseCity() {
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<> dist(0, cities_map.size() - 1);
+    uniform_int_distribution<> dist(0, cities.size() - 1);
     int randomIndex = dist(gen);
-    auto it = cities_map.begin();
+    auto it = cities.begin();
     std::advance(it, randomIndex);
-    return it->second;
+    auto key = it->first;
+    return cities.at(key);
 }
 
 float Game::RandomiseWeight(){
@@ -153,8 +158,9 @@ float Game::calExpenses(string str_ship, string str_del_met, City city, HQ& hq) 
     return result;
 }
 
-void Game::retreivePackage(City& city, string str_del_met, HQ& hq){
+void Game::retreivePackage(string city_name, string str_del_met, HQ& hq){
     Delivery_method del_met = getDelMethod(hq, str_del_met);
+    City& city = cities.at(city_name);
     map<string, Shipment> cityShipments = city.get_shipments();
     for (const auto& shipmentPair : cityShipments) {
         Shipment shipment = shipmentPair.second;
@@ -163,6 +169,20 @@ void Game::retreivePackage(City& city, string str_del_met, HQ& hq){
     cityShipments.clear();
     city.set_shipments(cityShipments);
     hq.remove_delivery_method(del_met);
+}
+
+void Game::saveState(std::string file="GameSave.txt") const{
+    std::ofstream f;
+    f.open(file);
+    f << *this;
+    f.close();
+}
+
+void Game::loadState(std::string file="GameSave.txt"){
+    std::ifstream f;
+    f.open(file);
+    f >> *this;
+    f.close();
 }
 
 inline std::ostream& operator<<(ostream& os, const Game& game){

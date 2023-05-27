@@ -8,6 +8,7 @@ class Delivery_method{
     std::string delivery_type;
 public:
     Delivery_method(std::string input_name);
+    Delivery_method() {};
     void set_name(std::string new_name);
     std::string get_name() const;
     void set_base_price(float new_price);
@@ -17,6 +18,10 @@ public:
     void set_delivery_type(std::string new_del_type);
     std::string get_delivery_type() const;
     void print() const;
+
+    inline friend std::ostream& operator<<(std::ostream& os, const Delivery_method& method);
+    inline friend std::istream& operator>>(std::istream& is, Delivery_method& method);
+
 };
 
 class Parcel_locker : public Delivery_method

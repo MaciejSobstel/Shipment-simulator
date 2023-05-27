@@ -1,7 +1,6 @@
 #include <iostream>
-#include "delivery_method.h"
 #include <cmath>
-
+#include "delivery_method.h"
 
 using namespace std;
 
@@ -52,6 +51,34 @@ void Delivery_method::print() const{
     cout << "   Expenses: " << ex << " per km" << endl;
 }
 
+inline std::ostream& operator<<(std::ostream& os, const Delivery_method& method){
+    os << "\tDELIVERY_METHOD{\n" << method.get_base_price() <<",\n";
+    os << method.get_expenses() <<",\n";
+    os << method.get_name() <<",\n";
+    os << method.get_delivery_type() <<",\n";
+    os << "}" <<endl;
+    return os;
+}
+
+inline std::istream& operator>>(std::istream& is, Delivery_method& method){
+    string s;
+    is >> s;
+    is >> s;
+    s.pop_back();
+    method.set_base_price(stof(s));
+    is >> s;
+    s.pop_back();
+    method.set_expenses(stof(s));
+    is >> s;
+    s.pop_back();
+    method.set_name(s);
+    is >> s;
+    s.pop_back();
+    method.set_delivery_type(s);
+    is >> s;
+    return is;
+}
+
 Parcel_locker::Parcel_locker(string input_name)
     : Delivery_method(input_name)
 {
@@ -59,7 +86,7 @@ Parcel_locker::Parcel_locker(string input_name)
     float new_expenses = 0.3;
     set_base_price(new_price);
     set_expenses(new_expenses);
-    set_delivery_type("Parcel locker");
+    set_delivery_type("Parcel_locker");
 }
 
 Delivery_man::Delivery_man(string input_name)
@@ -69,7 +96,7 @@ Delivery_man::Delivery_man(string input_name)
     float new_expenses = 0.5;
     set_base_price(new_price);
     set_expenses(new_expenses);
-    set_delivery_type("Delivery man");
+    set_delivery_type("Delivery_man");
 }
 
 Mailbox::Mailbox(string input_name)

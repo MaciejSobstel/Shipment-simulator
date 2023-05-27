@@ -25,10 +25,10 @@ class City : public Container{
 public:
     City(std::string n, float dist): name(n), distance(dist) {};
     City(){};
-    float get_distance() const {return distance;}
-    void set_distance(float new_distance) {distance = new_distance;}
-    std::string get_name() const {return name;}
-    void set_name(std::string new_name) {name = new_name;}
+    float get_distance() const                  {return distance;}
+    void set_distance(float new_distance)       {distance = new_distance;}
+    std::string get_name() const                {return name;}
+    void set_name(std::string new_name)         {name = new_name;}
 
     inline friend std::ostream& operator<<(ostream& os, const City& city);
     inline friend std::istream& operator>>(istream& is, City& city);
@@ -40,17 +40,21 @@ class HQ : public Container{
     int mailbox_num;
     int delivery_man_num;
     int parcel_locker_num;
+    
+    std::string generate_parcel_locker_name();
+    std::string generate_mailbox_name();
+    std::string generate_delivery_man_name();
+    void countMailboxNumUp()                    { mailbox_num = mailbox_num + 1;}
+    void countDeliveryManNumUp()                { delivery_man_num = delivery_man_num + 1;};
+    void countParcelLockerNumUp()               { parcel_locker_num = parcel_locker_num + 1;};
 public:
     HQ(float input_balance): balance(input_balance), mailbox_num(1), delivery_man_num(1), parcel_locker_num(1){};
-    void setMailboxNum(int num) { mailbox_num = num; }
-    int getMailboxNum() const { return mailbox_num; }
-    void countMailboxNumUp() { mailbox_num = mailbox_num + 1;}
-    void setDeliveryManNum(int num) { delivery_man_num = num; }
-    int getDeliveryManNum() const { return delivery_man_num; }
-    void countDeliveryManNumUp() { delivery_man_num = delivery_man_num + 1;};
-    void setParcelLockerNum(int num) { parcel_locker_num = num; }
-    int getParcelLockerNum() const { return parcel_locker_num; }
-    void countParcelLockerNumUp() { parcel_locker_num = parcel_locker_num + 1;};
+    void setMailboxNum(int num)                 { mailbox_num = num; }
+    int getMailboxNum() const                   { return mailbox_num; }
+    void setDeliveryManNum(int num)             { delivery_man_num = num; }
+    int getDeliveryManNum() const               { return delivery_man_num; }
+    void setParcelLockerNum(int num)            { parcel_locker_num = num; }
+    int getParcelLockerNum() const              { return parcel_locker_num; }
     void send_shipment(Shipment ship);
     void set_balance(float new_balance)          { balance = new_balance; }
     void addjust_balance(float gain)             { set_balance(get_balance() + gain);}
@@ -59,13 +63,16 @@ public:
     void print_delivery_methods() const;
     void add_delivery_method(Delivery_method delivery_method);
     void remove_delivery_method(Delivery_method delivery_method);
-    std::string generate_parcel_locker_name();
-    std::string generate_mailbox_name();
-    std::string generate_delivery_man_name();
     void buy_parcel_locker();
     void buy_mailbox();
     void buy_delivery_man();
     void print_balance() const;
+
+    void saveState(std::string file) const;
+    void loadState(std::string file);
+
+    inline friend std::ostream& operator<<(ostream& os, const HQ& hq);
+    inline friend std::istream& operator>>(istream& is, HQ& hq);
 };
 
 class Shipment{
@@ -79,8 +86,8 @@ public:
     Shipment() {};
     void set_name(std::string new_name);
     std::string get_name() const;
-    std::string get_destination() const {return destination;}
-    void set_destination(std::string new_dest) {destination = new_dest;}
+    std::string get_destination() const         {return destination;}
+    void set_destination(std::string new_dest)  {destination = new_dest;}
     void set_expenses(float new_expenses);
     float get_expenses() const;
     void set_cost(float new_cost);

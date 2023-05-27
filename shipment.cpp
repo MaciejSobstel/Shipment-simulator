@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <fstream>
 
 #include "shipment.h"
 
@@ -103,23 +104,23 @@ string HQ::generate_parcel_locker_name(){
     int par_lock_num = getParcelLockerNum();
     string str_num = to_string(par_lock_num);
     countParcelLockerNumUp();
-    string result = "Parcel locker " + str_num;
+    string result = "Parcel_locker" + str_num;
     return result;
 }
 
 string HQ::generate_mailbox_name(){
     int mail_num = getMailboxNum();
     string str_num = to_string(mail_num);
-    countParcelLockerNumUp();
-    string result = "Mailbox " + str_num;
+    countMailboxNumUp();
+    string result = "Mailbox" + str_num;
     return result;
 }
 
 string HQ::generate_delivery_man_name(){
     int dm_num = getDeliveryManNum();
     string str_num = to_string(dm_num);
-    countParcelLockerNumUp();
-    string result = "Delivery man " + str_num;
+    countDeliveryManNumUp();
+    string result = "Delivery_man" + str_num;
     return result;
 }
 
@@ -147,6 +148,59 @@ void HQ::buy_delivery_man(){
 void HQ::print_balance() const{
     float bal = get_balance();
     cout << "Your current balance: " << bal <<"$" << endl;
+}
+
+void HQ::saveState(std::string file="HQSave.txt") const{
+    std::ofstream f;
+    f.open(file);
+    f << *this;
+    f.close();
+}
+
+void HQ::loadState(std::string file="HQSave.txt"){
+    std::ifstream f;
+    f.open(file);
+    f >> *this;
+    f.close();
+}
+
+inline std::ostream& operator<<(ostream& os, const HQ& hq){
+    os << "\tHQ{\n" << hq.get_balance() <<",\n";
+    os << hq.getMailboxNum() <<",\n";
+    os << hq.getDeliveryManNum() <<",\n";
+    os << hq.getParcelLockerNum() <<",\n";
+    for(const auto& kv: hq.delivery_methods){
+        os << kv.second;
+    }
+    os << "}" <<endl;
+    return os;
+}
+
+inline std::istream& operator>>(istream& is, HQ& hq){
+    string s;
+    is >> s;
+    is >> s;
+    s.pop_back();
+    hq.set_balance(stof(s));
+    is >> s;
+    s.pop_back();
+    hq.setMailboxNum(stoi(s));
+    is >> s;
+    s.pop_back();
+    hq.setDeliveryManNum(stoi(s));
+    is >> s;
+    s.pop_back();
+    hq.setParcelLockerNum(stoi(s));
+    char c;
+    is >> c;
+    while (c!='}'){
+        is.putback(c);
+        Delivery_method method;
+        is >> method;
+        hq.add_delivery_method(method);
+        is >> c;
+    }
+    return is;
 }
 
 void Shipment::set_name(string new_name){
