@@ -1,6 +1,9 @@
-#include <string>
+#include <iostream>
 #include <map>
-#include "locations.h"
+
+#include "container.h"
+
+using namespace std;
 
 void Container::add_shipment(Shipment shipment){
     std::string shipment_name = shipment.get_name();
@@ -16,10 +19,15 @@ std::map<std::string, Shipment> Container::get_shipments() const {
     return shipments;
 }
 
-Headquarters::Headquarters(float input_balance){
-    set_balance(input_balance);
+void Container::print_shipments() const {
+    map<string, Shipment> ship_map = get_shipments();
+    cout << "Here's what we have in storage:\n";
+    for (auto it = ship_map.begin(); it != ship_map.end(); ++it) {
+        cout << it->first << endl;
+    }
+    cout << endl;
 }
 
-void Headquarters::send_shipment(City destination){
-    // code here:
+void HQ::send_shipment(Shipment ship){
+    remove_shipment(ship);
 }
