@@ -39,6 +39,7 @@ int main(){
             cout<<"7. Save and exit"<<endl;
             cin>>option;
             string city_n;
+            string ship_name;
             switch (option)
             {
             case 1:
@@ -112,6 +113,60 @@ int main(){
                 }
                 break;
             case 5:
+                cout<<"Choose city:"<<endl;
+                cout<<"1. Warszawa"<<endl;
+                cout<<"2. Kraków"<<endl;
+                cout<<"3. Poznań"<<endl;
+                cout<<"4. Wrocław"<<endl;
+                cout<<"5. Gdańsk"<<endl;
+                int city_option_send;
+                cin>>city_option_send;
+                switch (city_option_send)
+                {
+                case 1:
+                    city_n = "Warszawa";
+                    break;
+                case 2:
+                    city_n = "Kraków";
+                    break;
+                case 3:
+                    city_n = "Poznań";
+                    break;
+                case 4:
+                    city_n = "Wrocław";
+                    break;
+                case 5:
+                    city_n = "Gdańsk";
+                    break;
+                default:
+                    cout<<"Incorrect option"<<endl;
+                    break;
+                }
+                cout<<"Choose delivery method:"<<endl;
+                cout<<"1. Parcel Locker"<<endl;
+                cout<<"2. Mailbox"<<endl;
+                cout<<"3. Delivery man"<<endl;
+                int delivery_option_send;
+                cin>>delivery_option_send;
+                switch (delivery_option_send)
+                {
+                case 1:
+                    cout<<"Please type package name:"<<endl;
+                    cin>>ship_name;
+                    game.sendPackage(city_n, "Parcel_locker", ship_name, hq);
+                case 2:
+                    cout<<"Please type package name:"<<endl;
+                    cin>>ship_name;
+                    game.sendPackage(city_n, "Mailbox", ship_name, hq);
+                case 3:
+                    cout<<"Please type package name:"<<endl;
+                    cin>>ship_name;
+                    game.sendPackage(city_n, "Delivery_man", ship_name, hq);
+                default:
+                    cout<<"Incorrect option"<<endl;
+                    break;
+                }
+                
                 break;
             case 6:
                 round_running = false;
