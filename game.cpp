@@ -120,22 +120,12 @@ void Game::genShipmentInCity(){
 
 Delivery_method Game::getDelMethod(HQ& hq, string del_method) const {
     std::map<std::string, Delivery_method> delivery_methods_map = hq.get_delivery_methods();
-    for (const auto& methodPair : delivery_methods_map) {
-        if (methodPair.first == del_method) {
-            return methodPair.second;
-        }
-    }
-    throw runtime_error("Delivery method not found");
+    return delivery_methods_map[del_method];
 }
 
-Shipment Game::getShipment(HQ& hq, string shipment) const{
+Shipment Game::getShipment(HQ& hq, string shipment_name) const{
     std::map<std::string, Shipment> ship_map = hq.get_shipments();
-    for (const auto& methodPair : ship_map) {
-        if (methodPair.first == shipment) {
-            return methodPair.second;
-        }
-    }
-    throw runtime_error("Shipment not found");
+    return ship_map[shipment_name];
 }
 
 float Game::calCost(string ship, string str_del_met_type, City city, HQ& hq) const{
@@ -181,7 +171,6 @@ void Game::retreivePackage(string city_name, HQ& hq){
 
 void Game::sendPackage(string city_name, string delivery_type, string shipment_name, HQ& hq){
     Shipment ship = getShipment(hq, shipment_name);
-    hq.remove_shipment(shipment_name);
     string destination = ship.get_destination();
     string delivery = ship.get_delivery_type();
     map<string, City> citymap = get_cities();
@@ -194,6 +183,7 @@ void Game::sendPackage(string city_name, string delivery_type, string shipment_n
         cout<<"You get fined 50$ for sending a package with wrong data";
         hq.addjust_balance(-50);
     }
+    hq.remove_shipment(shipment_name);
 }
 
 void Game::saveState(std::string file="GameSave.txt") const{
