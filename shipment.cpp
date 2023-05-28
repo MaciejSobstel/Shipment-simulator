@@ -172,10 +172,25 @@ void HQ::loadState(std::string file="HQSave.txt"){
     f.close();
 }
 
-void HQ::addWorkingDeliveryMethod(Delivery_method delivery_method){
-    std::map<std::string, Delivery_method> del_methods = get_delivery_methods();
-    std::map<std::string, Delivery_method> working_del_methods = getWorkingDeliveryMethods();
+void HQ::sendDeliveryMethod(string del_met_type) {
+    auto it = delivery_methods.begin();
+    while (it != delivery_methods.end()) {
+        if (it->second.get_delivery_type() == del_met_type) {
+            const string name = it->second.get_name();
+            working_delivery_methods.insert({name, it->second});
+            delivery_methods.erase(it);
+            break;
+        }
+        ++it;
+    }
+}
 
+void HQ::returnDeliveryMethods(){
+    for (const auto& methodPair : working_delivery_methods) {
+        const string& name = methodPair.second.get_name();
+        delivery_methods.insert({name, methodPair.second});
+    }
+    working_delivery_methods.clear();
 }
 
 inline std::ostream& operator<<(ostream& os, const HQ& hq){

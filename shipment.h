@@ -41,7 +41,7 @@ class HQ : public Container{
     int mailbox_num;
     int delivery_man_num;
     int parcel_locker_num;
-    
+
     std::string generate_parcel_locker_name();
     std::string generate_mailbox_name();
     std::string generate_delivery_man_name();
@@ -51,7 +51,8 @@ class HQ : public Container{
 public:
     HQ(float input_balance): balance(input_balance), mailbox_num(1), delivery_man_num(1), parcel_locker_num(1){};
     std::map<std::string, Delivery_method> getWorkingDeliveryMethods() const {return  working_delivery_methods;}
-    void addWorkingDeliveryMethod(Delivery_method delivery_method);
+    void sendDeliveryMethod(string del_met_type);
+    void returnDeliveryMethods();
     void setMailboxNum(int num)                 { mailbox_num = num; }
     int getMailboxNum() const                   { return mailbox_num; }
     void setDeliveryManNum(int num)             { delivery_man_num = num; }
