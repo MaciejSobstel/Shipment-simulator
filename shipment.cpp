@@ -121,7 +121,7 @@ string HQ::generate_delivery_man_name(){
 
 void HQ::buy_parcel_locker(){
     if(get_balance() < 120){
-        cout<<"Not enough money";
+        cout<<"Not enough money"<<endl;
     }else {
         string name = generate_parcel_locker_name();
         Parcel_locker par_lock(name);
@@ -132,7 +132,7 @@ void HQ::buy_parcel_locker(){
 
 void HQ::buy_mailbox(){
     if (get_balance() < 200){
-        cout<<"Not enough money";
+        cout<<"Not enough money"<<endl;
     }
     else {
         string name = generate_mailbox_name();
@@ -144,7 +144,7 @@ void HQ::buy_mailbox(){
 
 void HQ::buy_delivery_man(){
     if (get_balance() < 300){
-        cout<<"Not enough money";
+        cout<<"Not enough money"<<endl;
     } else{
         string name = generate_delivery_man_name();
         Delivery_man dm(name);

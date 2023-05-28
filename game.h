@@ -17,6 +17,7 @@ class Game{
     float calExpenses(std::string shipment, std::string del_met, City city, HQ& hq) const;
 public:
     Game() : round_count(1), package_num(1), letter_num(1){}
+
     void setRoundCount(int count)                   { round_count = count; }
     int getRoundCount() const                       { return round_count; }
     void countRoundUp()                             { round_count = round_count + 1;}
@@ -38,6 +39,7 @@ public:
     Shipment getShipment(HQ& hq, std::string shipment) const;
     void retreivePackage(string city, HQ& hq);
     void sendPackage(string city_name, string delivery_type, string shipment_name, HQ& hq);
+    bool isShipmentInStorage(string shipment_name, HQ& hq);
     
     void saveState(std::string file) const;
     void loadState(std::string file);

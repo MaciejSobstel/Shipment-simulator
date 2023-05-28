@@ -175,15 +175,31 @@ void Game::sendPackage(string city_name, string delivery_type, string shipment_n
     string delivery = ship.get_delivery_type();
     map<string, City> citymap = get_cities();
     float exp = calExpenses(shipment_name, delivery_type, citymap[city_name], hq);
-    hq.addjust_balance(exp);
-    if (destination == city_name && delivery == delivery_type){
-        float cos = calCost(shipment_name, delivery_type, citymap[city_name], hq);
-        hq.addjust_balance(cos);
-    }else{
-        cout<<"You get fined 50$ for sending a package with wrong data";
-        hq.addjust_balance(-50);
+    if(-exp > hq.get_balance()){
+        cout<<"Not enough money"<<endl;
     }
-    hq.remove_shipment(shipment_name);
+    else {
+        hq.addjust_balance(exp);
+        if (destination == city_name && delivery == delivery_type){
+            float cos = calCost(shipment_name, delivery_type, citymap[city_name], hq);
+            hq.addjust_balance(cos);
+        }else{
+            cout<<"You get fined 50$ for sending a package with wrong data"<<endl;
+            hq.addjust_balance(-50);
+        }
+        hq.remove_shipment(shipment_name);
+    }
+}
+        
+
+bool Game::isShipmentInStorage(string shipment_name, HQ& hq){
+    map<std::string, Shipment> shipmap = hq.get_shipments();
+    auto it = shipmap.find(shipment_name);
+    if (it != shipmap.end()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void Game::saveState(std::string file="GameSave.txt") const{

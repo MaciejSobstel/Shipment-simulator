@@ -4,6 +4,10 @@ using namespace std;
 
 int main(){
     bool running = true;
+    int gameoption;
+    cout<<"1. New game"<<endl;
+    cout<<"2. Load game"<<endl;
+    cin>>gameoption;
     Game game;
     HQ hq(1000);
     City warszawa("Warszawa", 100);
@@ -11,16 +15,28 @@ int main(){
     City poznan("Poznań", 200);
     City wroclaw("Wrocław", 400);
     City gdansk("Gdańsk", 300);
-    game.add_city(warszawa);
-    game.add_city(krakow);
-    game.add_city(poznan);
-    game.add_city(wroclaw);
-    game.add_city(gdansk);
-    game.genShipmentInCity();
+    switch(gameoption)
+    {
+    case 1:
+        game.add_city(warszawa);
+        game.add_city(krakow);
+        game.add_city(poznan);
+        game.add_city(wroclaw);
+        game.add_city(gdansk);
+        game.genShipmentInCity();
+        break;
+    case 2:
+        game.loadState();
+        hq.loadState();
+        break;
+    default:
+        break;
+    }
+    
     while(running){
         hq.returnDeliveryMethods();
-        cout<<"---Round " + to_string(game.getRoundCount()) + "---"<<endl;
-        cout<<"---CHOOSE WHAT YOU WANT TO DO THIS TURN---"<<endl;
+        cout<<"---ROUND " + to_string(game.getRoundCount()) + "---"<<endl;
+        cout<<"---CHOOSE WHAT YOU WANT TO DO THIS ROUND---"<<endl;
         cout<<endl;
         bool round_running = true;
         while(round_running){
@@ -142,42 +158,63 @@ int main(){
                     cout<<"Incorrect option"<<endl;
                     break;
                 }
-                cout<<"Choose delivery method:"<<endl;
-                cout<<"1. Parcel Locker"<<endl;
-                cout<<"2. Mailbox"<<endl;
-                cout<<"3. Delivery man"<<endl;
-                int delivery_option_send;
-                cin>>delivery_option_send;
-                switch (delivery_option_send)
-                {
-                case 1:
-                    cout<<"Please type package name:"<<endl;
-                    cin>>ship_name;
-                    game.sendPackage(city_n, "Parcel_locker", ship_name, hq);
-                case 2:
-                    cout<<"Please type package name:"<<endl;
-                    cin>>ship_name;
-                    game.sendPackage(city_n, "Mailbox", ship_name, hq);
-                case 3:
-                    cout<<"Please type package name:"<<endl;
-                    cin>>ship_name;
-                    game.sendPackage(city_n, "Delivery_man", ship_name, hq);
-                default:
-                    cout<<"Incorrect option"<<endl;
-                    break;
+                cout<<"Please type shipment name:"<<endl;
+                cin>>ship_name;
+                if(game.isShipmentInStorage(ship_name, hq) == true){
+                    cout<<"Choose delivery method:"<<endl;
+                    cout<<"1. Parcel Locker"<<endl;
+                    cout<<"2. Mailbox"<<endl;
+                    cout<<"3. Delivery man"<<endl;
+                    int delivery_option_send;
+                    cin>>delivery_option_send;
+                    switch (delivery_option_send)
+                    {
+                    case 1:
+                        if(hq.sendDeliveryMethod("Parcel_locker") == true){
+                            game.sendPackage(city_n, "Parcel_locker", ship_name, hq);
+                        }
+                        else
+                            cout<<"You don't have this delivery method"<<endl;
+                        break;
+                    case 2:
+                        if(hq.sendDeliveryMethod("Mailbox") == true){
+                            game.sendPackage(city_n, "Mailbox", ship_name, hq);
+                        }
+                        else 
+                            cout<<"You don't have this delivery method"<<endl;
+                        break;
+                    case 3:
+                        if(hq.sendDeliveryMethod("Delivery_man") == true){
+                            game.sendPackage(city_n, "Delivery_man", ship_name, hq);
+                        }
+                        else
+                            cout<<"You don't have this delivery method"<<endl;
+                        break;
+                    default:
+                        cout<<"Incorrect option"<<endl;
+                        break;
+                    }
                 }
-                
+                else 
+                    cout<<"Shipment name incorrect"<<endl;
                 break;
             case 6:
                 round_running = false;
                 break;
             case 7:
+                game.saveState();
+                hq.saveState();
+                round_running = false;
                 running = false;
+                break;
             default:
                 cout<<"Incorrect option"<<endl;
                 break;
             }
         }
         game.countRoundUp();
+        for(int i=0; i<game.getRoundCount();i++){
+            game.genShipmentInCity();
+        }
     }
 }
