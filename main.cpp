@@ -32,7 +32,7 @@ int main(){
     default:
         break;
     }
-    
+
     while(running){
         hq.returnDeliveryMethods();
         cout<<"---ROUND " + to_string(game.getRoundCount()) + "---"<<endl;
@@ -69,17 +69,17 @@ int main(){
                 break;
             case 4:
                 cout<<"Choose city:"<<endl;
-                cout<<"1. Warszawa"<<endl;
+                cout<<"1. Gdańsk"<<endl;
                 cout<<"2. Kraków"<<endl;
                 cout<<"3. Poznań"<<endl;
-                cout<<"4. Wrocław"<<endl;
-                cout<<"5. Gdańsk"<<endl;
+                cout<<"4. Warszawa"<<endl;
+                cout<<"5. Wrocław"<<endl;
                 int city_option;
                 cin>>city_option;
                 switch (city_option)
                 {
                 case 1:
-                    city_n = "Warszawa";
+                    city_n = "Gdańsk";
                     break;
                 case 2:
                     city_n = "Kraków";
@@ -88,10 +88,10 @@ int main(){
                     city_n = "Poznań";
                     break;
                 case 4:
-                    city_n = "Wrocław";
+                    city_n = "Warszawa";
                     break;
                 case 5:
-                    city_n = "Gdańsk";
+                    city_n = "Wrocław";
                     break;
                 default:
                     cout<<"Incorrect option"<<endl;
@@ -180,7 +180,7 @@ int main(){
                         if(hq.sendDeliveryMethod("Mailbox") == true){
                             game.sendPackage(city_n, "Mailbox", ship_name, hq);
                         }
-                        else 
+                        else
                             cout<<"You don't have this delivery method"<<endl;
                         break;
                     case 3:
@@ -195,7 +195,7 @@ int main(){
                         break;
                     }
                 }
-                else 
+                else
                     cout<<"Shipment name incorrect"<<endl;
                 break;
             case 6:

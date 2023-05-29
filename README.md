@@ -1,5 +1,8 @@
 # Shipment-simulator
-
+Podział zadań:
+    -Klasy Shipment, Delivery_method, Game - Maciej Sobstel
+    -Klasa Conatiner, zapisywanie i odczyt z pliku - Aleksander Gozdowski
+    -plik main.py - Artur Węgrzycki
 Klasy:
     -Shipment(atrybuty: destination, cost, expenses, name, delivery_type):
         -Letter(atrybuty takie jak w klasie Shipment z hard zakodowanymi atrybutami cost, expenses)
