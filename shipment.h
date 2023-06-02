@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include "delivery_method.cpp"
 
 using namespace std;
@@ -40,7 +41,7 @@ class HQ : public Container{
     int mailbox_num;
     int delivery_man_num;
     int parcel_locker_num;
-    
+
     std::string generate_parcel_locker_name();
     std::string generate_mailbox_name();
     std::string generate_delivery_man_name();
