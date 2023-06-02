@@ -24,10 +24,10 @@ class City : public Container{
     std::string name;
 public:
     City(std::string n, float dist): name(n), distance(dist) {};
-    float get_distance() const {return distance;}
-    void set_distance(float new_distance) {distance = new_distance;}
-    std::string get_name() const {return name;}
-    void set_name(std::string new_name) {name = new_name;}
+    float get_distance() const                      {return distance;};
+    void set_distance(float new_distance)           { distance = new_distance; };
+    std::string get_name() const                    { return name; };
+    void set_name(std::string new_name)             { name = new_name; };
 };
 
 class HQ : public Container{
