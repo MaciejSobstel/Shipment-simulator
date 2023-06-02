@@ -32,7 +32,8 @@
 *.app
 
 #Custom
-Shiptest
-Shiptest.cpp
+Shiptest*
 test_locations.cpp
+gametest*
+Stest*
 .vscode
