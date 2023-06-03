@@ -30,6 +30,7 @@ int main(){
         hq.loadState();
         break;
     default:
+        running = false;
         break;
     }
 
