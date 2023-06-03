@@ -17,7 +17,6 @@ class Game{
     float calExpenses(std::string shipment, std::string del_met, City city, HQ& hq) const;
 public:
     Game() : round_count(1), package_num(1), letter_num(1){}
-
     void setRoundCount(int count)                   { round_count = count; }
     int getRoundCount() const                       { return round_count; }
     void countRoundUp()                             { round_count = round_count + 1;}

@@ -167,7 +167,6 @@ void Game::retreivePackage(string city_name, HQ& hq){
     }
     cityShipments.clear();
     city.set_shipments(cityShipments);
-}
 
 void Game::sendPackage(string city_name, string delivery_type, string shipment_name, HQ& hq){
     Shipment ship = getShipment(hq, shipment_name);
