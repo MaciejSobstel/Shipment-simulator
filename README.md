@@ -2,8 +2,8 @@
 <h2> Podział zadań: </h2>
 <ul>
     <li>Klasy Shipment, Delivery_method, Game - <b>Maciej Sobstel</b>
-    <li>Klasa Conatiner, zapisywanie i odczyt z pliku - <b>Aleksander Gozdowski</b>
-    <li>plik main.py - <b>Artur Węgrzycki</b>
+    <li>Klasa Conatiner, zapisywanie i odczyt z pliku - <b>Aleksander Gozdowski</b> (PewienInternauta)
+    <li>plik main.py - <b>Artur Węgrzycki</b> (W3g0Rz)
 </ul>
 <h2>Klasy: </h2>
 <ul>
@@ -15,7 +15,7 @@
     <li><b>Container</b> (atrybuty: shipments, który jest mapą obiektów klasy Shipment z ich nazwą jako klucz):
         <ul>
         <li><b>City</b> (atrybuty takie jak w klasie Container, dodatkowo ma atrybuty distance i name)
-        <li><b>HQ</b> (atrybuty takie jak w klasie Container, dodatkowo ma atrybuty balance, delivery_methods(tu znajdują się dostępne obiekty klasy Delivery_method), working_delivery_method(tu znajdują się obietky klasy Delivery_method, które nie są dostępne w tej turze), mailbox_num, delivery_man_num, parcel_locker_num)
+        <li><b>HQ</b> (atrybuty takie jak w klasie Container, dodatkowo ma atrybuty balance, delivery_methods (tu znajdują się dostępne obiekty klasy Delivery_method), working_delivery_method (tu znajdują się obietky klasy Delivery_method, które nie są dostępne w tej turze), mailbox_num, delivery_man_num, parcel_locker_num)
         </ul>
     <li><b>Delivery_method</b> (atrybuty: base_price, expenses, name, delivery_type):
         <ul>
@@ -23,7 +23,7 @@
         <li><b>Delivery_man</b> (tak jak w Parcel_locker)
         <li><b>Mailbox</b> (tak jak w Parcel_locker)
         </ul>
-    <li><b>Game</b> (atrybuty: round_count, package_num, letter_num, cities(map of cities involved in a game))
+    <li><b>Game</b> (atrybuty: round_count, package_num, letter_num, cities(mapa obiektów klasy City z ich nazwą jako klucz))
 </ul>
 <p>
 Na początku gry gracz dostaje wybór zaczęcia gry od nowa lub wczytanie jej z pliku. Jeżeli gracz wybierze nową grę to dostaje na start 1000$. W grze istnieje 5 miast z różnymi nazwami i odległościami.
